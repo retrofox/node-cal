@@ -5,7 +5,7 @@ A simple manager for the calendars
 ## How to use
 
 #### add Module
-var cal = require('../');
+    var cal = require('../');
 
 #### create calendar object
     var link = 'http://www.google.com/calendar/feeds/jgqs3n5kh7d327jq6bgok30klo%40group.calendar.google.com/public/basic'

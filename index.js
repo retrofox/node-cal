@@ -15,30 +15,44 @@ Calendar = function (url){
     ,  isSecure = protocol && protocol == 'https' ? true : false
 
     ,  host = _hasP >= 0 ? _dom.substring(_hasP + 3) : _dom
-    ,  feedUrl = url.replace(/\/basic$/, '/full') + (url.split('?alt=json').length <= 1 ? '?alt=json' : '');
+    ,  feedUrl = url.replace(/\/basic$/, '/full') + (url.split('?alt=json').length <= 1 ? '?alt=json' : '')
+    
+    ,  client = http.createClient(443, host, true)
+    ,  request = client.request('GET', feedUrl, {'host': host});
 
   /*
    * load(). Load a remote calendar
    */
-  this.remoteLoad = function (fn) {
+  this.remoteLoad = function (fn, onlyH) {
 
-    var  client = http.createClient(443, host, true)
-      ,  request = client.request('GET', feedUrl, {'host': host})
-      ,  body = ''
-      ,  self = this;
+    var  body = ''
+      ,  self = this
+      ,  onlyHeaders = onlyH ? onlyH : false;
 
     request.on('response', function (response) {
       response.setEncoding('utf8');
 
-      response.on('data', function(chunk){body+= chunk;});
-      response.on('end', function(){
+      if(!onlyHeaders) {
+        response.on('data', function(chunk){body+= chunk;});
+        response.on('end', function(){
 
-        if (response.statusCode == 200) fn(false, self.processBody(body, response.headers), response.headers);
-        else fn(true, body, response.headers);
-      });
+          if (response.statusCode == 200) fn(false, self.processBody(body, response.headers), response.headers);
+          else fn(true, body, response.headers);
+        });
+      }
+      else return fn(response.headers, response.statusCode);
+
     });
 
     request.end();
+  }
+
+  /*
+   * loadHeaders
+   */
+
+  this.loadHeaders = function (fn) {
+    return this.remoteLoad(fn, true);
   }
 
 
