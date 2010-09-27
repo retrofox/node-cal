@@ -12,13 +12,13 @@ var cal = require('../');
     , calendar = new cal (link);
 
 #### loads calendar
-  calendar.remoteLoad(function(er, data, headers) {
-    if(!er) console.log (data);
-    else {
-      console.log ('Error:');
-      console.log (data);
-    }
-  });
+    calendar.remoteLoad(function(er, data, headers) {
+      if(!er) console.log (data);
+      else {
+        console.log ('Error:');
+        console.log (data);
+      }
+    });
 
 
 ## Examples:
