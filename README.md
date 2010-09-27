@@ -21,6 +21,11 @@ A simple manager for the calendars
     });
 
 
+## Methods:
+
+    - loadRemote(fn, onlyH)
+    - loadHeaders(fn)
+
 ## Examples:
 
   Check out the [examples](http://github.com/retrofox/node-cal/tree/master/examples/) directory to play around.

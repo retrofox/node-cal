@@ -35,7 +35,6 @@ Calendar = function (url){
       if(!onlyHeaders) {
         response.on('data', function(chunk){body+= chunk;});
         response.on('end', function(){
-
           if (response.statusCode == 200) fn(false, self.processBody(body, response.headers), response.headers);
           else fn(true, body, response.headers);
         });
