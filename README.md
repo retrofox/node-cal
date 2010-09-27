@@ -23,7 +23,7 @@ var cal = require('../');
 
 ## Examples:
 
-  Check out the [examples](http://github.com/aheckmann/gm/tree/master/examples/) directory to play around.
+  Check out the [examples](http://github.com/retrofox/node-cal/tree/master/examples/) directory to play around.
 
 ## License 
 
