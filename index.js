@@ -21,7 +21,7 @@ Calendar = function (url){
     ,  request = client.request('GET', feedUrl, {'host': host});
 
   /*
-   * load(). Load a remote calendar
+   * remoteLoad(). Load a remote calendar
    */
   this.remoteLoad = function (fn, onlyH) {
 
@@ -47,18 +47,24 @@ Calendar = function (url){
   }
 
   /*
-   * loadHeaders
+   * loadHeaders().
    */
-
   this.loadHeaders = function (fn) {
     return this.remoteLoad(fn, true);
   }
 
+  /*
+   * simplify().
+   */
+
+   this.simplify = function() {
+     return this.jsonData;
+   }
 
   this.processBody = function (body, headers) {    
     var conType = headers['content-type'].split('; ')[0];
 
-    if(conType == 'application/json') return JSON.parse(body);
+    if(conType == 'application/json') return this.jsonData = JSON.parse(body);
     else return body;
   }
 }
