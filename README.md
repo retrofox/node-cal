@@ -2,6 +2,14 @@
 
 A simple manager for the calendars
 
+## How to use
+
+### add Module
+var cal = require('../');
+
+## create calendar object
+
+
 ## License 
 
 (The MIT License)

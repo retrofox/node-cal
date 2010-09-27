@@ -1,0 +1,17 @@
+{ "name": "node-cal"
+, "description": "A simple manager for the calendars."
+, "version": "0.1.0"
+, "author": "Damian Suarez <rdsuarez@gmail.com>"
+, "keywords": ["nodejs", "calendar"]
+, "engines": { "node": ">= 2.0.0" }
+, "bugs": "http://github.com/retrofox/node-cal/issues"
+, "licenses": [{ "type": "MIT", "url": "http://www.opensource.org/licenses/mit-license.php"}]
+, "main": "./index"
+, "contributors": 
+  [ { "name": "Damian Suarez", "email": "rdsuarez@gmail.com" }
+  ]
+, "repository":
+  { "type": "git"
+  , "url": "http://github.com/retrofox/node-cal.git"
+  }
+}

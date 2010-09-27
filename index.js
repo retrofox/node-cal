@@ -1,33 +1,54 @@
 // node-cal - Copyright Damian Suarez <rdsuarez@gmail.com> (MIT Licensed)
 
-/**
- * Module dependencies.
- */
+// *** Module dependencies. ****
 
 var http = require('http')
   ,  sys = require('sys');
 
-Calendar = function (url, options, fn){
+// *** Constructor ****
+Calendar = function (url){
 
-  var client = http.createClient(443, 'www.google.com', true)
-    ,  request = client.request('GET', url, {
-        'host': 'www.google.com'
-      })
-    ,  body = '';
+  // retrieve host from url
+  var _dom = url.substr(0, url.search('.com/') + 4)
+    ,  _hasP = _dom.search('://')
+    ,  protocol = _hasP >= 0 ? _dom.substring(0, _hasP) : undefined
+    ,  isSecure = protocol && protocol == 'https' ? true : false
 
-  this.url = url;
+    ,  host = _hasP >= 0 ? _dom.substring(_hasP + 3) : _dom
+    ,  feedUrl = url.replace(/\/basic$/, '/full') + (url.split('?alt=json').length <= 1 ? '?alt=json' : '');
 
-  request.on('response', function (response) {
-    response.setEncoding('utf8');
+  /*
+   * load(). Load a remote calendar
+   */
+  this.remoteLoad = function (fn) {
 
-    response.on('data', function(chunk){ body+= chunk; });
-    response.on('end', function(){
-      if (response.statusCode == 200) fn(JSON.parse(body));
+    var  client = http.createClient(443, host, true)
+      ,  request = client.request('GET', feedUrl, {'host': host})
+      ,  body = ''
+      ,  self = this;
+
+    request.on('response', function (response) {
+      response.setEncoding('utf8');
+
+      response.on('data', function(chunk){body+= chunk;});
+      response.on('end', function(){
+
+        if (response.statusCode == 200) fn(false, self.processBody(body, response.headers), response.headers);
+        else fn(true, body, response.headers);
+      });
     });
-  });
 
-  request.end();
+    request.end();
+  }
+
+
+  this.processBody = function (body, headers) {    
+    var conType = headers['content-type'].split('; ')[0];
+
+    if(conType == 'application/json') return JSON.parse(body);
+    else return body;
+  }
 }
 
 
-exports.Calendar = Calendar;
+module.exports = Calendar;
