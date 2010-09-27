@@ -8,17 +8,17 @@ A simple manager for the calendars
 var cal = require('../');
 
 #### create calendar object
-var link = 'http://www.google.com/calendar/feeds/jgqs3n5kh7d327jq6bgok30klo%40group.calendar.google.com/public/basic'
-  , calendar = new cal (link);
+  var link = 'http://www.google.com/calendar/feeds/jgqs3n5kh7d327jq6bgok30klo%40group.calendar.google.com/public/basic'
+    , calendar = new cal (link);
 
 #### loads calendar
-calendar.remoteLoad(function(er, data, headers) {
-  if(!er) console.log (data);
-  else {
-    console.log ('Error:');
-    console.log (data);
-  }
-});
+  calendar.remoteLoad(function(er, data, headers) {
+    if(!er) console.log (data);
+    else {
+      console.log ('Error:');
+      console.log (data);
+    }
+  });
 
 
 ## Examples:
