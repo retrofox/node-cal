@@ -6,7 +6,7 @@ var http = require('http')
   ,  sys = require('sys');
 
 // *** Constructor ****
-Calendar = function (url){
+var Calendar = function (url){
 
   // retrieve host from url
   var _dom = url.substr(0, url.search('.com/') + 4)
